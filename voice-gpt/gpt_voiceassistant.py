@@ -4,7 +4,7 @@ import speech_recognition as sr
 import threading
 import time
 
-openai.api_key = "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"
+openai.api_key = "your openai api key"
 engine = pyttsx3.init()
 
 recognizer = sr.Recognizer()
