@@ -1,10 +1,10 @@
 import openai 
+import openai
 import pyttsx3
 import speech_recognition as sr
 import threading
-import time
 
-openai.api_key = "your openai api key"
+openai.api_key = "your-api-key"
 engine = pyttsx3.init()
 
 recognizer = sr.Recognizer()
@@ -45,7 +45,7 @@ def speech_to_text():
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
             transcription = transcribe_audio_to_text(audio)
-            if "voxi" in transcription.lower():
+            if "Voxi" in transcription.lower():
                 #record audio
                 print("Say your question...")
                 audio = recognizer.listen(source, phrase_time_limit=None, timeout=None)
@@ -63,26 +63,14 @@ def speech_to_text():
                         audio = recognizer.listen(source, phrase_time_limit=15, timeout=15)
                         transcription = transcribe_audio_to_text(audio)
                         if not transcription:
-                            print("Sorry, I didn't catch that. Please try again.")
-                            continue
-                        elif "no" in transcription.lower() or "disconnect" in transcription.lower():
-                            print("Thank you for using. Goodbye!")
-                            return
-                        elif "genius" in transcription.lower():
-                            print("Please wait for the current question to finish.")
-                            continue
-                        else:
                             break
+                        elif "no" in transcription.lower() or "disconnect" in transcription.lower():
+                            return
 
 def main():
-    try:
-        stt_thread = threading.Thread(target=speech_to_text)
-        stt_thread.start()
-        stt_thread.join()
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        recognizer.stop_listening()
+    stt_thread = threading.Thread(target=speech_to_text)
+    stt_thread.start()
+    stt_thread.join()
 
 if __name__ == "__main__":
     main()
