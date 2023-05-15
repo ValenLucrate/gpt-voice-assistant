@@ -16,6 +16,8 @@ To install the required packages, run the following command in your terminal:
 pip install pyttsx3 SpeechRecognition openai
 
 You will also need to set your OpenAI API key as an environment variable by putting your openai api key inside openai.api_key = "your-api-key"
+You can get your openai api key from here:
+https://platform.openai.com/account/api-keys
 
 ## Usage
 To start the GPT-3 Voice Assistant, run the following command in your terminal:
