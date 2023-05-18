@@ -24,4 +24,4 @@ To start the GPT-3 Voice Assistant, run the following command in your terminal:
 The application will prompt you to say "Voxi" to start recording your question. Once you provide a prompt, the model will generate a response and speak it aloud. The assistant will then ask if there's anything else you need help with, and will continue to listen for additional prompts until you say "no" or "disconnect".(In state of fixing the code for that atm..)
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the LICENSE file for detail
