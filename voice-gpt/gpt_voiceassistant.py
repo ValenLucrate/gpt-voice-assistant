@@ -3,7 +3,7 @@ import pyttsx3
 import speech_recognition as sr
 import threading
 
-openai.api_key = "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"
+openai.api_key = "your-api-key"
 
 def transcribe_audio_to_text(audio, recognizer):
     try:
