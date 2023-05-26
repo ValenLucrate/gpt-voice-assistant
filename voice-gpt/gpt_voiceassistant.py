@@ -34,45 +34,40 @@ def speak_text(text, engine):
     engine.say(text)
     engine.runAndWait()
 
-def speak_text(text):
-    engine.setProperty('rate', 170)
-    engine.setProperty('pitch', 50)  # adjust pitch
-    engine.say(text)
-    engine.runAndWait()
-
-def speech_to_text():
+def speech_to_text(recognizer, engine):
     while True:
-        print("Say 'Voxi' to start recording your question...")
+        print("Say 'Genius' to start recording your question...")
         with sr.Microphone() as source:
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
-            transcription = transcribe_audio_to_text(audio)
-            if "Voxi" in transcription.lower():
+            transcription = transcribe_audio_to_text(audio, recognizer)
+            if "genius" in transcription.lower():
                 #record audio
                 print("Say your question...")
                 audio = recognizer.listen(source, phrase_time_limit=None, timeout=None)
-                text = transcribe_audio_to_text(audio)
+                text = transcribe_audio_to_text(audio, recognizer)
                 if text:
                     print(f"You: {text}")
                     #response
                     prompt = f"Q: {text}\nA:"
                     response = generate_response(prompt)
                     print(f"GPT-3: {response}")
-                    speak_text(response)
+                    speak_text(response, engine)
                     #ask user if there is anything else they need help with
-                    while True:
-                        print("Is there anything else I can help you with?")
-                        audio = recognizer.listen(source, phrase_time_limit=15, timeout=15)
-                        transcription = transcribe_audio_to_text(audio)
-                        if not transcription:
-                            break
-                        elif "no" in transcription.lower() or "disconnect" in transcription.lower():
-                            return
+                    print("Is there anything else I can help you with?")
+                    audio = recognizer.listen(source, phrase_time_limit=15, timeout=15)
+                    transcription = transcribe_audio_to_text(audio, recognizer)
+                    if not transcription:
+                        break
+                    elif "no" in transcription.lower() or "disconnect" in transcription.lower():
+                        speak_text("Goodbye!", engine)
+                        return
 
 def main():
-    stt_thread = threading.Thread(target=speech_to_text)
-    stt_thread.start()
-    stt_thread.join()
+    recognizer = sr.Recognizer()
+    recognizer.energy_threshold = 500
+    engine = pyttsx3.init()
+    speech_to_text(recognizer, engine)
 
 if __name__ == "__main__":
     main()
