@@ -6,10 +6,7 @@ import threading
 openai.api_key = "your-api-key"
 engine = pyttsx3.init()
 
-recognizer = sr.Recognizer()
-recognizer.energy_threshold = 500
-
-def transcribe_audio_to_text(audio):
+def transcribe_audio_to_text(audio, recognizer):
     try:
         return recognizer.recognize_google(audio)
     except sr.UnknownValueError:
@@ -19,17 +16,23 @@ def transcribe_audio_to_text(audio):
 
 def generate_response(prompt):
     response = openai.Completion.create(
-        engine = 'text-davinci-003',
-        prompt = prompt,
-        max_tokens = 4000,
-        n = 1,
-        stop = None,
-        temperature = 0.5,
+        engine='text-davinci-003',
+        prompt=prompt,
+        max_tokens=4000,
+        n=1,
+        stop=None,
+        temperature=0.5,
     )
     if response.choices:
         return response.choices[0].text
     else:
         return "Sorry, I don't know the answer to that."
+
+def speak_text(text, engine):
+    engine.setProperty('rate', 170)
+    engine.setProperty('pitch', 50)  # adjust pitch
+    engine.say(text)
+    engine.runAndWait()
 
 def speak_text(text):
     engine.setProperty('rate', 170)
