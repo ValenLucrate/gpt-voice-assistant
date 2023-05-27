@@ -35,12 +35,12 @@ def speak_text(text, engine):
 
 def speech_to_text(recognizer, engine):
     while True:
-        print("Say 'Genius' to start recording your question...")
+        print("Say 'Jarvis' to start recording your question...")
         with sr.Microphone() as source:
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
             transcription = transcribe_audio_to_text(audio, recognizer)
-            if "genius" in transcription.lower():
+            if "jarvis" in transcription.lower():
                 #record audio
                 print("Say your question...")
                 audio = recognizer.listen(source, phrase_time_limit=None, timeout=None)
