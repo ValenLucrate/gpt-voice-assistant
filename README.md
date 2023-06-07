@@ -29,4 +29,4 @@ the price for using openai api key is	$0.002 / 1K tokens!
 ## License
 This project is licensed under the MIT License. See the LICENSE file for detail
 
-############
+#############
